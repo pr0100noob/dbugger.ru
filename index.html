@@ -1,0 +1,392 @@
+<title>ИИ-Детективы</title>
+<style>
+  :root {
+    --bg: #F5F1E8;
+    --surface: #FFFFFF;
+    --surface-2: #EFEAD8;
+    --text: #16231F;
+    --text-muted: #5B6D66;
+    --accent: #E86C2F;
+    --accent-strong: #B8501C;
+    --accent-2: #1E9C74;
+    --border: rgba(22,35,31,0.14);
+    --shadow: rgba(22,35,31,0.08);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #10201C;
+      --surface: #182B26;
+      --surface-2: #1F332C;
+      --text: #F1EDE4;
+      --text-muted: #9FB3AC;
+      --accent: #FF8A4C;
+      --accent-strong: #FF8A4C;
+      --accent-2: #6EE7C0;
+      --border: rgba(241,237,228,0.14);
+      --shadow: rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #10201C;
+    --surface: #182B26;
+    --surface-2: #1F332C;
+    --text: #F1EDE4;
+    --text-muted: #9FB3AC;
+    --accent: #FF8A4C;
+    --accent-strong: #FF8A4C;
+    --accent-2: #6EE7C0;
+    --border: rgba(241,237,228,0.14);
+    --shadow: rgba(0,0,0,0.35);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 18px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .mono {
+    font-family: ui-monospace, "Cascadia Code", "SF Mono", Consolas, "Roboto Mono", monospace;
+  }
+
+  a { color: var(--accent-strong); }
+
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    padding: 110px 28px 90px;
+    text-align: center;
+  }
+  #net {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0.5;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: ui-monospace, "Cascadia Code", "SF Mono", Consolas, "Roboto Mono", monospace;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 7px 16px 7px 12px;
+    box-shadow: 0 1px 2px var(--shadow);
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex: none;
+    animation: pulse 2.2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(232,108,47,0.35); }
+    50% { box-shadow: 0 0 0 6px rgba(232,108,47,0); }
+  }
+  h1.brand {
+    margin: 26px 0 0;
+    font-family: ui-monospace, "Cascadia Code", "SF Mono", Consolas, "Roboto Mono", monospace;
+    font-weight: 700;
+    font-size: clamp(2.6rem, 5.5vw + 1rem, 4.6rem);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  h1.brand .b { color: var(--accent-strong); }
+  .tagline {
+    max-width: 480px;
+    margin: 22px auto 0;
+    font-size: 20px;
+    color: var(--text-muted);
+    text-wrap: balance;
+  }
+  .term-line {
+    display: inline-block;
+    margin-top: 40px;
+    font-family: ui-monospace, "Cascadia Code", "SF Mono", Consolas, "Roboto Mono", monospace;
+    font-size: 15px;
+    color: var(--accent-2);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 18px;
+  }
+  .cursor {
+    display: inline-block;
+    width: 8px;
+    height: 1em;
+    margin-left: 2px;
+    background: var(--accent-2);
+    vertical-align: -0.15em;
+    animation: blink 1s step-end infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .dot, .cursor { animation: none; }
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  /* ---------- SECTIONS ---------- */
+  section.block {
+    padding: 76px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  section.block:last-of-type { border-bottom: none; }
+
+  .kicker {
+    font-family: ui-monospace, "Cascadia Code", "SF Mono", Consolas, "Roboto Mono", monospace;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-strong);
+    margin: 0 0 12px;
+  }
+  h2 {
+    font-size: clamp(1.6rem, 2.2vw + 1rem, 2.1rem);
+    margin: 0 0 18px;
+    text-wrap: balance;
+  }
+  .lede {
+    font-size: 19px;
+    color: var(--text-muted);
+    max-width: 62ch;
+  }
+
+  .cards {
+    margin-top: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .card {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 24px;
+    box-shadow: 0 1px 3px var(--shadow);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px var(--shadow);
+  }
+  .bp {
+    flex: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--surface);
+    font-family: ui-monospace, "Cascadia Code", "SF Mono", Consolas, "Roboto Mono", monospace;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3px;
+  }
+  .card h3 {
+    margin: 0 0 6px;
+    font-size: 18px;
+  }
+  .card p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 16.5px;
+  }
+  .card .ex {
+    display: block;
+    margin-top: 10px;
+    font-family: ui-monospace, "Cascadia Code", "SF Mono", Consolas, "Roboto Mono", monospace;
+    font-size: 14.5px;
+    color: var(--accent-2);
+    background: var(--surface-2);
+    border-radius: 8px;
+    padding: 8px 12px;
+  }
+
+  .soon-badge {
+    display: inline-block;
+    margin-top: 26px;
+    font-family: ui-monospace, "Cascadia Code", "SF Mono", Consolas, "Roboto Mono", monospace;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent-strong);
+    border: 1px dashed var(--accent-strong);
+    border-radius: 999px;
+    padding: 8px 18px;
+  }
+
+  footer {
+    padding: 40px 0 60px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+  footer .mono { color: var(--text); font-weight: 600; }
+</style>
+
+<div class="hero">
+  <canvas id="net"></canvas>
+  <div class="hero-inner">
+    <span class="eyebrow"><span class="dot"></span>dbugger.ru готовится к запуску</span>
+    <h1 class="brand">d<span class="b">bug</span>ger.ru</h1>
+    <p class="tagline">Место, где учатся по-настоящему работать с ИИ — а не просто просить его решить пример из домашки.</p>
+    <div class="term-line">статус: в разработке<span class="cursor"></span></div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section class="block">
+    <p class="kicker">// баг (так называют ошибку), который ловят почти все</p>
+    <h2>ИИ отвечает быстро — и мышление отключается</h2>
+    <p class="lede">Самый частый способ использовать ИИ — спросить готовый ответ и вставить его куда нужно. Это работает, но не учит думать. Настоящая польза начинается тогда, когда ИИ помогает разобраться, а не просто выдаёт результат.</p>
+  </section>
+
+  <section class="block">
+    <p class="kicker">// как должно быть на самом деле</p>
+    <h2>Три привычки, с которых всё начинается</h2>
+    <div class="cards">
+      <div class="card">
+        <span class="bp">1</span>
+        <div>
+          <h3>Спрашивай «почему», а не только «что»</h3>
+          <p>Готовый ответ забывается на следующий день. Понимание — нет.</p>
+          <span class="ex">вместо «реши пример» → «объясни, как решается»</span>
+        </div>
+      </div>
+      <div class="card">
+        <span class="bp">2</span>
+        <div>
+          <h3>Проси шаги, а не финальный ответ</h3>
+          <p>Так видно, где именно ты застреваешь — и учишься проходить это место сам.</p>
+          <span class="ex">«покажи по шагам» вместо «дай готовый ответ»</span>
+        </div>
+      </div>
+      <div class="card">
+        <span class="bp">3</span>
+        <div>
+          <h3>Используй ИИ, чтобы придумывать</h3>
+          <p>Идеи для проекта, сюжет для рассказа, вопросы для исследования — здесь ИИ правда помогает, а не просто делает всё за тебя.</p>
+          <span class="ex">«помоги придумать 5 вариантов» вместо «сделай за меня»</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <p class="kicker">// что дальше</p>
+    <h2>Первый урок уже пишется</h2>
+    <p class="lede">Начинаем с самого простого — знакомства с ИИ для тех, кому 10 и больше. Дальше будет глубже.</p>
+    <span class="soon-badge">открытие скоро</span>
+  </section>
+
+</div>
+
+<footer>
+  <span class="mono">dbugger.ru</span> · пространство для тех, кто учится думать вместе с ИИ, а не вместо него
+</footer>
+
+<script>
+(function () {
+  var canvas = document.getElementById('net');
+  var ctx = canvas.getContext('2d');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var w, h, points;
+
+  function accentColor() {
+    return getComputedStyle(document.documentElement).getPropertyValue('--accent-2').trim() || '#1E9C74';
+  }
+
+  function resize() {
+    var hero = canvas.parentElement;
+    w = canvas.width = hero.clientWidth;
+    h = canvas.height = hero.clientHeight;
+    var count = Math.max(14, Math.min(34, Math.floor(w / 40)));
+    points = [];
+    for (var i = 0; i < count; i++) {
+      points.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        vx: (Math.random() - 0.5) * 0.18,
+        vy: (Math.random() - 0.5) * 0.18
+      });
+    }
+  }
+
+  function step() {
+    ctx.clearRect(0, 0, w, h);
+    var color = accentColor();
+    for (var i = 0; i < points.length; i++) {
+      var p = points[i];
+      if (!reduce) {
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0 || p.x > w) p.vx *= -1;
+        if (p.y < 0 || p.y > h) p.vy *= -1;
+      }
+    }
+    for (var i = 0; i < points.length; i++) {
+      for (var j = i + 1; j < points.length; j++) {
+        var a = points[i], b = points[j];
+        var dx = a.x - b.x, dy = a.y - b.y;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 140) {
+          ctx.strokeStyle = color;
+          ctx.globalAlpha = (1 - dist / 140) * 0.35;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.stroke();
+        }
+      }
+    }
+    ctx.globalAlpha = 1;
+    for (var i = 0; i < points.length; i++) {
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.arc(points[i].x, points[i].y, 1.6, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    if (!reduce) requestAnimationFrame(step);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  step();
+})();
+</script>
