@@ -249,6 +249,40 @@
     padding: 8px 18px;
   }
 
+  .download-block {
+    margin-top: 40px;
+    padding-top: 40px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+  .download-block .kicker { justify-content: center; display: flex; }
+  .btn-download {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 18px;
+    background: var(--accent);
+    color: var(--bg);
+    font-weight: 700;
+    font-size: 17px;
+    text-decoration: none;
+    border-radius: 12px;
+    padding: 14px 28px;
+    box-shadow: 0 4px 14px var(--shadow);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn-download:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px var(--shadow);
+  }
+  .btn-download .ico { font-size: 20px; line-height: 1; }
+  .download-note {
+    margin-top: 14px;
+    font-family: ui-monospace, "Cascadia Code", "SF Mono", Consolas, "Roboto Mono", monospace;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
   footer {
     padding: 40px 0 60px;
     text-align: center;
@@ -312,6 +346,14 @@
     <h2>Первый урок уже пишется</h2>
     <p class="lede">Начинаем с самого простого — знакомства с ИИ для тех, кому 10 и больше. Дальше будет глубже.</p>
     <span class="soon-badge">открытие скоро</span>
+
+    <div class="download-block">
+      <p class="kicker">// первая сборка</p>
+      <a class="btn-download" href="/downloads/dbugger-quest.apk" download>
+        <span class="ico">⬇</span> Скачать APK для Android
+      </a>
+      <p class="download-note">ранняя версия · только для Android · будет обновляться</p>
+    </div>
   </section>
 
 </div>
